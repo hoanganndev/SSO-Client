@@ -4,6 +4,7 @@ import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import About from "./components/About/About";
+import Code from "./components/Code/Code";
 import "./index.scss";
 import store from "./redux/store";
 import reportWebVitals from "./reportWebVitals";
@@ -17,6 +18,7 @@ root.render(
                     <Route path="/" element={<AppRoute />}>
                         <Route path="/about" element={<About />}></Route>
                     </Route>
+                    <Route path="/code" element={<Code />}></Route>
                 </Routes>
             </BrowserRouter>
         </React.StrictMode>

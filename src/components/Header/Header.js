@@ -1,7 +1,18 @@
-import "./Header.scss";
 import { Container, Nav, Navbar, NavDropdown } from "react-bootstrap";
 import { NavLink } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { doLogout } from "../../redux/action/accountAction";
+import "./Header.scss";
 const Header = () => {
+    const user = useSelector(state => state.account.userInfo);
+    const disPatch = useDispatch();
+    const handleLogin = () => {
+        window.location.href = `${process.env.REACT_APP_BACKEND_SSO_LOGIN}?serviceURL=${process.env.REACT_APP_SERVICE_URL}`;
+    };
+    const handleLogout = () => {
+        disPatch(doLogout());
+    };
+
     return (
         <>
             <Navbar bg="light" expand="lg">
@@ -17,14 +28,32 @@ const Header = () => {
                                 About
                             </NavLink>
                         </Nav>
+                        {user && user.access_token && (
+                            <Nav>
+                                <Nav.Link href="#">
+                                    Welcome!{user.email}
+                                </Nav.Link>
+                            </Nav>
+                        )}
+
                         <Nav>
                             <NavDropdown
                                 title="Settings"
                                 id="basic-nav-dropdown"
                             >
-                                <NavDropdown.Item href="#action/3.1">
-                                    Logout
-                                </NavDropdown.Item>
+                                {user && user.access_token ? (
+                                    <NavDropdown.Item
+                                        onClick={() => handleLogout()}
+                                    >
+                                        logout
+                                    </NavDropdown.Item>
+                                ) : (
+                                    <NavDropdown.Item
+                                        onClick={() => handleLogin()}
+                                    >
+                                        Login
+                                    </NavDropdown.Item>
+                                )}
                             </NavDropdown>
                         </Nav>
                     </Navbar.Collapse>
