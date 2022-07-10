@@ -7,7 +7,7 @@ export const USER_LOGIN_SUCCESS = "USER_LOGIN_SUCCESS";
 export const USER_LOGOUT_REQUEST = "USER_LOGOUT_REQUEST";
 export const USER_LOGOUT_FAILSED = "USER_LOGOUT_FAILSED";
 export const USER_LOGOUT_SUCCESS = "USER_LOGOUT_SUCCESS";
-
+// verify-token dispatch, attached connect.sid and ssoToken
 export const doLogin = ssoToken => {
     return (dispatch, getState) => {
         dispatch({ type: USER_LOGIN_REQUEST });
@@ -59,6 +59,7 @@ export const doLogout = () => {
             .then(res => {
                 if (res && +res.EC === 0) {
                     dispatch({ type: USER_LOGOUT_SUCCESS });
+                    window.location.href = "/";
                 } else {
                     dispatch({ type: USER_LOGOUT_FAILSED, error: res.EM });
                 }
