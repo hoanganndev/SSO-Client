@@ -2,7 +2,7 @@ import axios from "axios";
 // Set config defaults when creating the instance
 const instance = axios.create({
     //baseURL: "https://api.example.com",
-    withCredentials: true,
+    withCredentials: true, // config for cookies auto send with req from client to server
 });
 
 // Alter defaults after instance has been created

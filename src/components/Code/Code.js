@@ -23,6 +23,7 @@ const Code = () => {
             navigate("/");
         }
     }, [user]);
+
     return (
         <>
             <div className="container">
