@@ -8,7 +8,7 @@ const About = () => {
                 .get("http://localhost:8081/health")
                 .then(res => console.log(">>> check res:", res))
                 .catch(err => console.log(err));
-        }, 2000);
+        }, 0);
     }, []);
     return (
         <>

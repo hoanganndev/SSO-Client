@@ -17,7 +17,7 @@ instance.interceptors.request.use(
         const headerToken =
             store.getState()?.account?.userInfo?.access_token ?? "";
         if (headerToken) {
-            config.headers.common["Authorization"] = `Bearer ${headerToken}`;
+            config.headers.Authorization = `Bearer ${headerToken}`;
         }
 
         return config;
@@ -33,6 +33,15 @@ instance.interceptors.response.use(
         return response && response.data ? response.data : response;
     },
     function (error) {
+        if (error.response.status === 400) {
+            // retry api if error with status code 400
+            const headerToken =
+                store.getState()?.account?.userInfo?.access_token ?? "";
+            if (headerToken) {
+                error.config.headers.Authorization = `Bearer ${headerToken}`;
+            }
+            return axios.request(error.config);
+        }
         if (error && error.response && error.response.data)
             return error.response.data;
         return Promise.reject(error);
