@@ -18,6 +18,7 @@ const App = () => {
             dispatch(doGetAccount());
         }
     }, []);
+
     return (
         <>
             {isLoading === true ? (

@@ -1,20 +1,28 @@
 import axios from "axios";
-// Set config defaults when creating the instance
+let store;
+//_store: store of redux
+export const injectStore = _store => {
+    store = _store;
+};
+
 const instance = axios.create({
     //baseURL: "https://api.example.com",
     withCredentials: true, // config for cookies auto send with req from client to server
 });
 
-// Alter defaults after instance has been created
-//instance.defaults.headers.common["Authorization"] = AUTH_TOKEN;
 // Add a request interceptor
 instance.interceptors.request.use(
     function (config) {
-        // Do something before request is sent
+        //assign bearer token with header
+        const headerToken =
+            store.getState()?.account?.userInfo?.access_token ?? "";
+        if (headerToken) {
+            config.headers.common["Authorization"] = `Bearer ${headerToken}`;
+        }
+
         return config;
     },
     function (error) {
-        // Do something with request error
         return Promise.reject(error);
     }
 );
@@ -22,15 +30,11 @@ instance.interceptors.request.use(
 // Add a response interceptor
 instance.interceptors.response.use(
     function (response) {
-        // Any status code that lie within the range of 2xx cause this function to trigger
-        // Do something with response data
         return response && response.data ? response.data : response;
     },
     function (error) {
         if (error && error.response && error.response.data)
             return error.response.data;
-        // Any status codes that falls outside the range of 2xx cause this function to trigger
-        // Do something with response error
         return Promise.reject(error);
     }
 );
