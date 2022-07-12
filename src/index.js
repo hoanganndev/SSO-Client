@@ -12,16 +12,16 @@ import AppRoute from "./routes/AppRoute";
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
     <Provider store={store}>
-        <React.StrictMode>
-            <BrowserRouter>
-                <Routes>
-                    <Route path="/" element={<AppRoute />}>
-                        <Route path="/about" element={<About />}></Route>
-                    </Route>
-                    <Route path="/code" element={<Code />}></Route>
-                </Routes>
-            </BrowserRouter>
-        </React.StrictMode>
+        {/* <React.StrictMode> */}
+        <BrowserRouter>
+            <Routes>
+                <Route path="/" element={<AppRoute />}>
+                    <Route path="/about" element={<About />}></Route>
+                </Route>
+                <Route path="/code" element={<Code />}></Route>
+            </Routes>
+        </BrowserRouter>
+        {/* </React.StrictMode> */}
     </Provider>
 );
 
