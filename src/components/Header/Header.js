@@ -3,6 +3,7 @@ import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { doLogout } from "../../redux/action/accountAction";
 import "./Header.scss";
+import logo from "../../logo.svg";
 const Header = () => {
     const user = useSelector(state => state.account.userInfo);
     const disPatch = useDispatch();
@@ -17,21 +18,33 @@ const Header = () => {
         <>
             <Navbar bg="light" expand="lg">
                 <Container>
-                    <Navbar.Brand href="/">React-Bootstrap</Navbar.Brand>
+                    <NavLink to="/" className="navbar-brand">
+                        <img
+                            src={logo}
+                            width="30"
+                            height="30"
+                            className="d-inline-block align-top"
+                        />
+                        React-Bootstrap
+                    </NavLink>
                     <Navbar.Toggle aria-controls="basic-navbar-nav" />
                     <Navbar.Collapse id="basic-navbar-nav">
                         <Nav className="me-auto">
                             <NavLink className="nav-link" to="/">
                                 Home
                             </NavLink>
-                            <NavLink className="nav-link" to="/about">
-                                About
+                            <NavLink className="nav-link" to="/weather">
+                                Weather
                             </NavLink>
                         </Nav>
                         {user && user.access_token && (
                             <Nav>
                                 <Nav.Link href="#">
-                                    Welcome!{user.email}
+                                    <span> Welcome!</span>
+                                    <span>
+                                        {" "}
+                                        {user.username ? user.username : "User"}
+                                    </span>
                                 </Nav.Link>
                             </Nav>
                         )}

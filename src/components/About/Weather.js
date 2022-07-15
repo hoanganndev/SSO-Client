@@ -2,8 +2,9 @@ import Carousel from "react-bootstrap/Carousel";
 import "./Weather.scss";
 import axios from "../../customize/axios";
 import { useState, useEffect } from "react";
-
+import moment from "moment";
 const Weather = props => {
+    const { cityState } = props;
     const [dataWeather, setDataWeather] = useState([]);
 
     const getWeatherByLocation = async locationId => {
@@ -15,7 +16,7 @@ const Weather = props => {
             }
         );
         if (res && res.title) {
-            console.log(res);
+            console.log("check weather res", res);
             setDataWeather(res.consolidated_weather);
         }
     };
@@ -39,8 +40,8 @@ const Weather = props => {
     };
 
     useEffect(() => {
-        getWeatherByLocation(1236594);
-    }, []);
+        getWeatherByLocation(cityState ? cityState : "1236594");
+    }, [cityState]);
 
     return (
         <div className="weather-container">
@@ -55,7 +56,12 @@ const Weather = props => {
                                     alt="First slide"
                                 />
                                 <Carousel.Caption>
-                                    <h3>{item.weather_state_name}</h3>
+                                    <h3>
+                                        {item.weather_state_name}-
+                                        {moment(item.applicable_date).format(
+                                            "dddd"
+                                        )}
+                                    </h3>
                                     <p>
                                         {item.max_temp}&#8451; -{" "}
                                         <span style={{ color: "#70757a" }}>
